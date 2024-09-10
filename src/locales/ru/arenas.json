@@ -1,0 +1,22 @@
+{
+  "currently_no_campaigns": "Catiarena is hibernating zzz",
+  "follow": "follow",
+  "for_campaigns": "for the latest campaigns.",
+  "upcoming": "Upcoming",
+  "ended": "Ended",
+  "start_in": "Начинается через {{value}}",
+  "end_in": "Заканчивается на {{value}}",
+  "tasks": "Задачи",
+  "quiz": "Викторин",
+  "arena_not_started_toast": "Arena starting soon",
+  "complete_tasks_to_play_quiz_toast": "You need to complete all Tasks to unlock Quiz game.",
+  "beginner": "Начинающий",
+  "intermediate": "Промежуточный",
+  "advanced": "Передовой",
+  "leaderboard": "Таблица лидеров",
+  "leaderboard_desc": "Для арены {{value}}",
+  "quiz_start_in": "Начинается через {{value}}",
+  "quiz_end_in": "Заканчивается на {{value}}",
+  "rewards": "награды",
+  "speed_up": "Ускорение"
+}

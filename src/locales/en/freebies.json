@@ -1,0 +1,17 @@
+{
+  "Example": "Example",
+  "freebies": "Freebies",
+  "gems": "Gems",
+  "gem": "Gem",
+  "lifeline": "Lifeline",
+  "star": "Star",
+  "collect": "Collect",
+  "every": "every",
+  "days": "{{value}} days",
+  "day": "{{value}} day",
+  "hours": "{{value}} hours",
+  "hour": "{{value}} hour",
+  "minutes": "{{value}} minutes",
+  "minute": "{{value}} minute",
+  "check_news_btn": "Check news"
+}

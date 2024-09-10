@@ -1,0 +1,151 @@
+$particles: 7;
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-ms-keyframes #{$animationName} {
+    @content;
+  }
+
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+@mixin animation-delay($settings) {
+  -moz-animation-delay: $settings;
+  -webkit-animation-delay: $settings;
+  -o-animation-delay: $settings;
+  -ms-animation-delay: $settings;
+  animation-delay: $settings;
+}
+
+@mixin animation-duration($settings) {
+  -moz-animation-duration: $settings;
+  -webkit-animation-duration: $settings;
+  -o-animation-duration: $settings;
+  -ms-animation-duration: $settings;
+  animation-duration: $settings;
+}
+
+@mixin animation($settings) {
+  -moz-animation: $settings;
+  -webkit-animation: $settings;
+  -o-animation: $settings;
+  -ms-animation: $settings;
+  animation: $settings;
+}
+
+@mixin transform($settings) {
+  transform: $settings;
+  -moz-transform: $settings;
+  -webkit-transform: $settings;
+  -o-transform: $settings;
+  -ms-transform: $settings;
+}
+
+@keyframes bang-1 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(-100px, -500px);
+  }
+}
+
+@keyframes bang-2 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(100px, -400px);
+  }
+}
+
+@keyframes bang-3 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(-100px, -300px);
+  }
+}
+
+@keyframes bang-4 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(-200px, -400px);
+  }
+}
+
+@keyframes bang-5 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(150px, -700px);
+  }
+}
+
+@keyframes bang-6 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(200px, -500px);
+  }
+}
+
+@keyframes bang-7 {
+  100% {
+    @apply transform-gpu;
+    transform: translate(-200px, -300px);
+  }
+}
+
+@keyframes gravity {
+  100% {
+    @apply transform-gpu;
+    transform: translateY(700px);
+  }
+}
+.gem-wrapper {
+  animation: 1s gravity ease-in infinite forwards;
+  @for $i from 0 through $particles {
+    img:nth-child(#{$i}) {
+      animation: 1s bang-#{$i} ease-out infinite forwards;
+    }
+  }
+}
+
+@keyframes cloud-right {
+  50% {
+    transform: translate(15%, -60%) scale(1.2);
+  }
+  100% {
+    transform: translate(30%, -60%) scale(1.2);
+  }
+}
+
+@keyframes cloud-left {
+  50% {
+    transform: translate(-30%, 25%) scale(1.2);
+  }
+  100% {
+    transform: translate(-45%, 25%) scale(1.2);
+  }
+}
+
+.cloud-left {
+  @apply transform-gpu;
+  animation: cloud-left 7s linear infinite;
+  -webkit-animation: cloud-left 7s linear infinite;
+  -moz-animation: cloud-left 7s linear infinite;
+}
+
+.cloud-right {
+  @apply transform-gpu;
+  animation: cloud-right 7s linear infinite;
+  -webkit-animation: cloud-right 7s linear infinite;
+  -moz-animation: cloud-right 7s linear infinite;
+}

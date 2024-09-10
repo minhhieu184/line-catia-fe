@@ -1,0 +1,22 @@
+{
+  "currently_no_campaigns": "Catiarena is hibernating zzz",
+  "follow": "follow",
+  "for_campaigns": "for the latest campaigns.",
+  "upcoming": "Upcoming",
+  "ended": "Ended",
+  "start_in": "Start in {{value}}",
+  "end_in": "Ends in {{value}}",
+  "tasks": "Tasks",
+  "quiz": "Quiz",
+  "arena_not_started_toast": "Arena starting soon",
+  "complete_tasks_to_play_quiz_toast": "You need to complete all Tasks to unlock Quiz game.",
+  "beginner": "Beginner",
+  "intermediate": "Intermediate",
+  "advanced": "Advanced",
+  "leaderboard": "Leaderboard",
+  "leaderboard_desc": "For {{value}} arena",
+  "quiz_start_in": "Starts in {{value}}",
+  "quiz_end_in": "Ends in {{value}}",
+  "rewards": "Rewards",
+  "speed_up": "Speed up"
+}

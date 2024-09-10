@@ -1,0 +1,18 @@
+export const TOAST_IDS = {
+  ALREADY_USED: "already-used",
+  ANSWER_CORRECT: "answer-correct",
+  ANSWER_WRONG: "answer-wrong",
+  CHOOSE_AN_ANSWER: "choose-an-answer",
+  COMING_SOON: "coming-soon",
+  COPIED: "copied",
+  COUNTDOWN_NOT_ENDED: "countdown-not-ended",
+  FETCH_ERROR: "fetch-error",
+  FETCH_SUCCESS: "fetch-success",
+  GAME_ENDED: "game-ended",
+  NO_BOOST_AVAILABLE: "no-boost-available",
+  NO_TURN_LEFT: "no-turn-left",
+  REWARD: "reward",
+  STATE_MISMATCHED: "state-mismatched",
+  TIMES_UP: "times-up",
+  TASKS_NOT_COMPLETED: "tasks not completed",
+};
