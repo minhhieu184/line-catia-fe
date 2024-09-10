@@ -8,7 +8,7 @@ import {
 import { useArenaDetail, useGameCheckSocialTask, useMe } from "@/lib/swr";
 import { capitalizeAndReplaceUnderscore } from "@/lib/utils";
 import type { APIResponse, ArenaDetail, Tasks } from "@/types/app";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -88,7 +88,7 @@ const TaskItem = ({
   mutateArena: KeyedMutator<APIResponse<ArenaDetail>>;
   isArenaActive: boolean;
 }) => {
-  const utils = useUtils();
+  // const utils = useUtils();
   const { mutate: mutateMe } = useMe();
   const [socialLink, setSocialLink] = useState<number>(-1);
   const taskPending = localStorage.getItem("task-pending");
@@ -146,10 +146,11 @@ const TaskItem = ({
           setSocialLink(task.id);
         }
 
-        task.link_type.includes("telegram") ||
-        task.link_type.includes("teletop")
-          ? utils.openTelegramLink(task.ref_url || task.url)
-          : utils.openLink(task.ref_url || task.url);
+        // task.link_type.includes("telegram") ||
+        // task.link_type.includes("teletop")
+        //   ? utils.openTelegramLink(task.ref_url || task.url)
+        //   : utils.openLink(task.ref_url || task.url);
+        window.open(task.ref_url || task.url, "_blank");
 
         setTimeout(() => {
           isArenaActive &&

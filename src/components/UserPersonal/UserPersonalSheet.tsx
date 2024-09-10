@@ -34,7 +34,7 @@ import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useTranslation } from "react-i18next";
 import {
   Dialog,
@@ -59,7 +59,7 @@ export default function UserPersonalSheet({
   setIsOpen: (state: boolean) => void;
 } & PropsWithChildren) {
   const { data: user, mutate } = useMe();
-  const utils = useUtils();
+  // const utils = useUtils();
   const [showWalletAddress, setShowWalletAddress] = useState(false);
   const [walletTab, setWalletTab] = useState("ton");
   const [showDialogConfirm, setShowDialogConfirm] = useState(false);
@@ -476,11 +476,13 @@ export default function UserPersonalSheet({
             {socials.map(({ type, url }) => (
               <Fragment key={url}>
                 {type === "TELEGRAM" ? (
-                  <Button onClick={() => utils.openTelegramLink(url)}>
+                  // <Button onClick={() => utils.openTelegramLink(url)}>
+                  <Button onClick={() => window.open(url)}>
                     <TelegramFillIcon />
                   </Button>
                 ) : (
-                  <Button onClick={() => utils.openLink(url)}>
+                  // <Button onClick={() => utils.openLink(url)}>
+                  <Button onClick={() => window.open(url)}>
                     <TwitterIcon />
                   </Button>
                 )}

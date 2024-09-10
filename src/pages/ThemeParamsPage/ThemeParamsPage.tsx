@@ -1,11 +1,11 @@
 import { DisplayData } from "@/components/DisplayData/DisplayData";
 import { Link } from "@/components/Link/Link";
 import { Page } from "@/components/Page/Page";
-import { useThemeParams } from "@telegram-apps/sdk-react";
+// import { useThemeParams } from "@telegram-apps/sdk-react";
 import type { FC } from "react";
 
 export const ThemeParamsPage: FC = () => {
-  const themeParams = useThemeParams();
+  // const themeParams = useThemeParams();
 
   return (
     <Page
@@ -21,14 +21,14 @@ export const ThemeParamsPage: FC = () => {
         </>
       }
     >
-      <DisplayData
+      {/* <DisplayData
         rows={Object.entries(themeParams.getState()).map(([title, value]) => ({
           title: title
             .replace(/[A-Z]/g, (m) => `_${m.toLowerCase()}`)
             .replace(/background/, "bg"),
           value,
         }))}
-      />
+      /> */}
     </Page>
   );
 };

@@ -18,7 +18,7 @@ import { CATIA_GLOBAL_CHAT_URL } from "@/lib/constants";
 import { TOAST_IDS } from "@/lib/toast";
 import useCatiaStore from "@/lib/useCatiaStore";
 import type { GameDetail, Question, Session } from "@/types/app";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import type { PropsWithChildren } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -59,7 +59,7 @@ const ProgressDialog = ({
   lang: string;
 } & PropsWithChildren) => {
   const { t } = useTranslation("quiz");
-  const utils = useUtils();
+  // const utils = useUtils();
   const quizProgressDialogOpen = useCatiaStore(
     (state) => state.quizProgressDialogOpen
   );
@@ -120,7 +120,8 @@ const ProgressDialog = ({
               {t("progress_desc_left")}{" "}
               <span
                 className="text-primary underline cursor-pointer"
-                onClick={() => utils.openTelegramLink(CATIA_GLOBAL_CHAT_URL)}
+                // onClick={() => utils.openTelegramLink(CATIA_GLOBAL_CHAT_URL)}
+                onClick={() => window.open(CATIA_GLOBAL_CHAT_URL, "_blank")}
               >
                 {t("progress_catia")}
               </span>{" "}

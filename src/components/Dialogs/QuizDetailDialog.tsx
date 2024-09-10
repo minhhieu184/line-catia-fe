@@ -6,7 +6,7 @@ import WebIcon from "@/components/icons/socials/WebIcon";
 import YoutubeIcon from "@/components/icons/socials/YoutubeIcon";
 import useCatiaStore from "@/lib/useCatiaStore";
 import { convertMinutesToTimeTextShort } from "@/lib/utils";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useTranslation } from "react-i18next";
 import Markdown from "react-markdown";
 import { Button } from "../ui/button";
@@ -22,7 +22,7 @@ const QuizDetailDialog = ({
   setIsOpen: (state: boolean) => void;
   onPlay: () => void;
 }) => {
-  const utils = useUtils();
+  // const utils = useUtils();
   const { t } = useTranslation("quiz");
 
   const game = useCatiaStore((state) => state.game);
@@ -60,9 +60,9 @@ const QuizDetailDialog = ({
                       item.joined ? "opacity-80" : ""
                     }`}
                     onClick={() => {
-                      item.link_type.includes("telegram")
-                        ? utils.openTelegramLink(item.ref_url || item.url)
-                        : utils.openLink(item.ref_url || item.url);
+                      // item.link_type.includes("telegram")
+                      //   ? utils.openTelegramLink(item.ref_url || item.url)
+                      //   : utils.openLink(item.ref_url || item.url);
                     }}
                   >
                     {item.link_type.includes("telegram") ? (

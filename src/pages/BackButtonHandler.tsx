@@ -1,25 +1,20 @@
-import useCatiaStore from "@/lib/useCatiaStore";
-import { useBackButton } from "@telegram-apps/sdk-react";
-import { type PropsWithChildren, useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import useCatiaStore from '@/lib/useCatiaStore';
+// import { useBackButton } from "@telegram-apps/sdk-react";
+import { type PropsWithChildren, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-const TopLevelPages = ["/", "/quizzes", "/tasks", "/friends"];
+const TopLevelPages = ['/', '/quizzes', '/tasks', '/friends'];
 
 const BackButtonHandler = ({ children }: PropsWithChildren) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const buttonBack = useBackButton();
+  // const buttonBack = useBackButton();
 
   const inviteDialogOpen = useCatiaStore((state) => state.inviteDialogOpen);
-  const profileBottomSheetOpen = useCatiaStore(
-    (state) => state.profileBottomSheetOpen
-  );
-  const quizProgressDialogOpen = useCatiaStore(
-    (state) => state.quizProgressDialogOpen
-  );
-  const quizFiftyFiftyDialogOpen = useCatiaStore(
-    (state) => state.quizFiftyFiftyDialogOpen
-  );
+  const profileBottomSheetOpen = useCatiaStore((state) => state.profileBottomSheetOpen);
+  const quizProgressDialogOpen = useCatiaStore((state) => state.quizProgressDialogOpen);
+  const quizFiftyFiftyDialogOpen = useCatiaStore((state) => state.quizFiftyFiftyDialogOpen);
   const taskListSheetOpen = useCatiaStore((state) => state.taskListSheetOpen);
   const speedUpSheetOpen = useCatiaStore((state) => state.speedUpSheetOpen);
   const quizDetailDialog = useCatiaStore((state) => state.quizDetailDialog);
@@ -46,40 +41,55 @@ const BackButtonHandler = ({ children }: PropsWithChildren) => {
     quizDetailDialog,
   ]);
 
-  useEffect(() => {
-    function onClick() {
-      if (anyCloseableDialogOpen) {
-        closeAllDialog();
-      } else {
-        navigate(-1);
-        closeAllDialog();
-      }
-    }
-    buttonBack.on("click", onClick);
-    return () => {
-      buttonBack.off("click", onClick);
-    };
-  }, [buttonBack, navigate, anyCloseableDialogOpen, closeAllDialog]);
+  // useEffect(() => {
+  //   function onClick() {
+  //     if (anyCloseableDialogOpen) {
+  //       closeAllDialog();
+  //     } else {
+  //       navigate(-1);
+  //       closeAllDialog();
+  //     }
+  //   }
+  //   buttonBack.on('click', onClick);
+  //   return () => {
+  //     buttonBack.off('click', onClick);
+  //   };
+  // }, [buttonBack, navigate, anyCloseableDialogOpen, closeAllDialog]);
 
-  useEffect(() => {
-    if (anyCloseableDialogOpen) {
-      buttonBack.show();
-      return;
-    }
-    if (
-      location.key === "default" ||
-      TopLevelPages.includes(location.pathname)
-    ) {
-      buttonBack.hide();
-      return;
-    }
-    if (!buttonBack.supports("show")) {
-      return;
-    }
-    buttonBack.show();
-  }, [location, buttonBack, anyCloseableDialogOpen]);
+  // useEffect(() => {
+  //   if (anyCloseableDialogOpen) {
+  //     buttonBack.show();
+  //     return;
+  //   }
+  //   if (location.key === 'default' || TopLevelPages.includes(location.pathname)) {
+  //     buttonBack.hide();
+  //     return;
+  //   }
+  //   if (!buttonBack.supports('show')) {
+  //     return;
+  //   }
+  //   buttonBack.show();
+  // }, [location, buttonBack, anyCloseableDialogOpen]);
 
-  return children;
+  return (
+    <>
+      {/* <div>
+        <Button
+          onClick={() => {
+            if (anyCloseableDialogOpen) {
+              closeAllDialog();
+            } else {
+              navigate(-1);
+              closeAllDialog();
+            }
+          }}
+        >
+          BACK
+        </Button>
+      </div> */}
+      {children}
+    </>
+  );
 };
 
 export default BackButtonHandler;

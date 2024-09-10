@@ -18,7 +18,7 @@ import { useGameCheckSocialTask, useMe } from "@/lib/swr.ts";
 import { capitalizeAndReplaceUnderscore } from "@/lib/utils.ts";
 import type { FetchTaskList } from "@/pages/Catia/TaskPage.tsx";
 import type { Tasks } from "@/types/app.ts";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -114,7 +114,7 @@ const TaskItem = ({
   const { mutate: mutateMe } = useMe();
   const [link, setLink] = useState<number>(-1);
   useGameCheckSocialTask(link, game_slug);
-  const utils = useUtils();
+  // const utils = useUtils();
 
   const IconRender = useCallback(() => {
     const link = task.link_type;
@@ -142,10 +142,11 @@ const TaskItem = ({
       onClick={() => {
         !task.joined && setLink(task.id);
         /// await
-        task.link_type.includes("telegram") ||
-        task.link_type.includes("teletop")
-          ? utils.openTelegramLink(task.ref_url || task.url)
-          : utils.openLink(task.ref_url || task.url);
+        // task.link_type.includes("telegram") ||
+        // task.link_type.includes("teletop")
+        //   ? utils.openTelegramLink(task.ref_url || task.url)
+        //   : utils.openLink(task.ref_url || task.url);
+        window.open(task.ref_url || task.url, "_blank");
         setTimeout(() => {
           fetchTaskList()
             .then(() => mutateMe())

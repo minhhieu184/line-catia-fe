@@ -1,40 +1,40 @@
 import { Header } from "@/components/Header/Header";
 import { Nav } from "@/components/Nav/Nav";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  retrieveLaunchParams,
-  useLaunchParams,
-  useViewport,
-} from "@telegram-apps/sdk-react";
+// import {
+//   retrieveLaunchParams,
+//   useLaunchParams,
+//   useViewport,
+// } from "@telegram-apps/sdk-react";
 import { type FC, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import useCatiaStore from "../lib/useCatiaStore";
 import BackButtonHandler from "./BackButtonHandler";
 
 export const LayoutFull: FC = () => {
-  const viewport = useViewport();
-  const { initDataRaw } = retrieveLaunchParams();
-  const lp = useLaunchParams();
+  // const viewport = useViewport();
+  // const { initDataRaw } = retrieveLaunchParams();
+  // const lp = useLaunchParams();
   const setToken = useCatiaStore((state) => state.setToken);
 
-  useEffect(() => {
-    if (!viewport) return;
-    if (viewport.isStable && !viewport.isExpanded) {
-      viewport.expand();
-    }
-  }, [viewport]);
+  // useEffect(() => {
+  //   if (!viewport) return;
+  //   if (viewport.isStable && !viewport.isExpanded) {
+  //     viewport.expand();
+  //   }
+  // }, [viewport]);
 
-  useEffect(() => {
-    setToken(initDataRaw);
-  }, [initDataRaw, setToken]);
+  // useEffect(() => {
+  //   setToken(initDataRaw);
+  // }, [initDataRaw, setToken]);
 
-  useEffect(() => {
-    if (lp.startParam) {
-      useCatiaStore.setState({
-        referrer: lp.startParam,
-      });
-    }
-  }, [lp.startParam]);
+  // useEffect(() => {
+  //   if (lp.startParam) {
+  //     useCatiaStore.setState({
+  //       referrer: lp.startParam,
+  //     });
+  //   }
+  // }, [lp.startParam]);
 
   return (
     <BackButtonHandler>
@@ -57,29 +57,29 @@ export const LayoutFull: FC = () => {
 };
 
 export const LayoutWithoutHeaderAndNav: FC = () => {
-  const viewport = useViewport();
-  const { initDataRaw } = retrieveLaunchParams();
-  const lp = useLaunchParams();
+  // const viewport = useViewport();
+  // const { initDataRaw } = retrieveLaunchParams();
+  // const lp = useLaunchParams();
   const setToken = useCatiaStore((state) => state.setToken);
 
-  useEffect(() => {
-    if (!viewport) return;
-    if (viewport.isStable && !viewport.isExpanded) {
-      viewport.expand();
-    }
-  }, [viewport]);
+  // useEffect(() => {
+  //   if (!viewport) return;
+  //   if (viewport.isStable && !viewport.isExpanded) {
+  //     viewport.expand();
+  //   }
+  // }, [viewport]);
 
-  useEffect(() => {
-    setToken(initDataRaw);
-  }, [initDataRaw, setToken]);
+  // useEffect(() => {
+  //   setToken(initDataRaw);
+  // }, [initDataRaw, setToken]);
 
-  useEffect(() => {
-    if (lp.startParam) {
-      useCatiaStore.setState({
-        referrer: lp.startParam,
-      });
-    }
-  }, [lp.startParam]);
+  // useEffect(() => {
+  //   if (lp.startParam) {
+  //     useCatiaStore.setState({
+  //       referrer: lp.startParam,
+  //     });
+  //   }
+  // }, [lp.startParam]);
 
   return (
     <BackButtonHandler>
@@ -98,29 +98,29 @@ export const LayoutWithoutHeaderAndNav: FC = () => {
 };
 
 export const LayoutWithoutHeader: FC = () => {
-  const viewport = useViewport();
-  const { initDataRaw } = retrieveLaunchParams();
-  const lp = useLaunchParams();
+  // const viewport = useViewport();
+  // const { initDataRaw } = retrieveLaunchParams();
+  // const lp = useLaunchParams();
   const setToken = useCatiaStore((state) => state.setToken);
 
-  useEffect(() => {
-    if (!viewport) return;
-    if (viewport.isStable && !viewport.isExpanded) {
-      viewport.expand();
-    }
-  }, [viewport]);
+  // useEffect(() => {
+  //   if (!viewport) return;
+  //   if (viewport.isStable && !viewport.isExpanded) {
+  //     viewport.expand();
+  //   }
+  // }, [viewport]);
 
-  useEffect(() => {
-    setToken(initDataRaw);
-  }, [initDataRaw, setToken]);
+  // useEffect(() => {
+  //   setToken(initDataRaw);
+  // }, [initDataRaw, setToken]);
 
-  useEffect(() => {
-    if (lp.startParam) {
-      useCatiaStore.setState({
-        referrer: lp.startParam,
-      });
-    }
-  }, [lp.startParam]);
+  // useEffect(() => {
+  //   if (lp.startParam) {
+  //     useCatiaStore.setState({
+  //       referrer: lp.startParam,
+  //     });
+  //   }
+  // }, [lp.startParam]);
 
   return (
     <BackButtonHandler>
@@ -140,29 +140,29 @@ export const LayoutWithoutHeader: FC = () => {
 };
 
 export const LayoutWithoutNav: FC = () => {
-  const viewport = useViewport();
-  const { initDataRaw } = retrieveLaunchParams();
-  const lp = useLaunchParams();
+  // const viewport = useViewport();
+  // const { initDataRaw } = retrieveLaunchParams();
+  // const lp = useLaunchParams();
   const setToken = useCatiaStore((state) => state.setToken);
 
-  useEffect(() => {
-    if (!viewport) return;
-    if (viewport.isStable && !viewport.isExpanded) {
-      viewport.expand();
-    }
-  }, [viewport]);
+  // useEffect(() => {
+  //   if (!viewport) return;
+  //   if (viewport.isStable && !viewport.isExpanded) {
+  //     viewport.expand();
+  //   }
+  // }, [viewport]);
 
-  useEffect(() => {
-    setToken(initDataRaw);
-  }, [initDataRaw, setToken]);
+  // useEffect(() => {
+  //   setToken(initDataRaw);
+  // }, [initDataRaw, setToken]);
 
-  useEffect(() => {
-    if (lp.startParam) {
-      useCatiaStore.setState({
-        referrer: lp.startParam,
-      });
-    }
-  }, [lp.startParam]);
+  // useEffect(() => {
+  //   if (lp.startParam) {
+  //     useCatiaStore.setState({
+  //       referrer: lp.startParam,
+  //     });
+  //   }
+  // }, [lp.startParam]);
 
   return (
     <BackButtonHandler>
@@ -182,29 +182,29 @@ export const LayoutWithoutNav: FC = () => {
 };
 
 export const LayoutCatiarena: FC = () => {
-  const viewport = useViewport();
-  const { initDataRaw } = retrieveLaunchParams();
-  const lp = useLaunchParams();
+  // const viewport = useViewport();
+  // const { initDataRaw } = retrieveLaunchParams();
+  // const lp = useLaunchParams();
   const setToken = useCatiaStore((state) => state.setToken);
 
-  useEffect(() => {
-    if (!viewport) return;
-    if (viewport.isStable && !viewport.isExpanded) {
-      viewport.expand();
-    }
-  }, [viewport]);
+  // useEffect(() => {
+  //   if (!viewport) return;
+  //   if (viewport.isStable && !viewport.isExpanded) {
+  //     viewport.expand();
+  //   }
+  // }, [viewport]);
 
-  useEffect(() => {
-    setToken(initDataRaw);
-  }, [initDataRaw, setToken]);
+  // useEffect(() => {
+  //   setToken(initDataRaw);
+  // }, [initDataRaw, setToken]);
 
-  useEffect(() => {
-    if (lp.startParam) {
-      useCatiaStore.setState({
-        referrer: lp.startParam,
-      });
-    }
-  }, [lp.startParam]);
+  // useEffect(() => {
+  //   if (lp.startParam) {
+  //     useCatiaStore.setState({
+  //       referrer: lp.startParam,
+  //     });
+  //   }
+  // }, [lp.startParam]);
 
   return (
     <BackButtonHandler>

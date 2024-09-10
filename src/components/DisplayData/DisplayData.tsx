@@ -1,7 +1,7 @@
-import { type InitData, type RGB as RGBType, isRGB } from "@telegram-apps/sdk";
+// import { type InitData, type RGB as RGBType, isRGB } from "@telegram-apps/sdk";
 import type { FC, ReactNode } from "react";
 
-import type { SDKContextItem } from "@telegram-apps/sdk-react";
+// import type { SDKContextItem } from "@telegram-apps/sdk-react";
 import React from "react";
 import { RGB } from "../RGB/RGB";
 import "./DisplayData.css";
@@ -9,12 +9,12 @@ import "./DisplayData.css";
 export interface DisplayDataRow {
   title: string;
   value?:
-    | RGBType
+    // | RGBType
     | string
     | number
     | boolean
     | ReactNode
-    | SDKContextItem<InitData | undefined>;
+    // | SDKContextItem<InitData | undefined>;
 }
 
 export interface DisplayDataProps {
@@ -29,7 +29,8 @@ export const DisplayData: FC<DisplayDataProps> = ({ rows }) => {
 
         if (value === undefined) {
           valueNode = <i>empty</i>;
-        } else if (typeof value === "string" && isRGB(value)) {
+        // } else if (typeof value === "string" && isRGB(value)) {
+        } else if (typeof value === "string") {
           valueNode = <RGB color={value} />;
         } else if (typeof value === "boolean") {
           valueNode = value ? "✔️" : "❌";

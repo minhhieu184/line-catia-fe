@@ -18,13 +18,13 @@ import {
   getTimeDifference,
 } from "@/lib/utils";
 import type { Freebies } from "@/types/app";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 export default function FreebiesPage() {
   const { t } = useTranslation("freebies");
-  const utils = useUtils();
+  // const utils = useUtils();
   const isFirstTime = useMemo(
     () => localStorage.getItem("running_tutorial"),
     []
@@ -83,7 +83,8 @@ export default function FreebiesPage() {
   }, [news, now, newsId, isFirstTime, newsLastCheckedTime]);
 
   const onCheckNews = () => {
-    utils.openTelegramLink(CATIA_ANNOUCEMENT_URL);
+    // utils.openTelegramLink(CATIA_ANNOUCEMENT_URL);
+    window.open(CATIA_ANNOUCEMENT_URL);
     newsId !== news?.id && setNewsLastCheckedTime(new Date());
     setNewsId(news?.id);
   };

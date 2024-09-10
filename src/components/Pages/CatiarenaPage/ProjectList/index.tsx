@@ -1,12 +1,12 @@
 import { NoCampaignBg } from "@/assets/CatiarenaPage/NoCampaignBg";
 import { CATIA_GLOBAL_CHAT_URL } from "@/lib/constants";
 import type { Arena } from "@/types/app";
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useTranslation } from "react-i18next";
 import ProjectCard from "./ProjectCard";
 
 const ProjectList = ({ arenas }: { arenas?: Arena[] }) => {
-  const utils = useUtils();
+  // const utils = useUtils();
   const { t } = useTranslation("arenas");
 
   if (!arenas || arenas?.length === 0)
@@ -21,7 +21,8 @@ const ProjectList = ({ arenas }: { arenas?: Arena[] }) => {
             <span className="capitalize">{t("follow")}</span>{" "}
             <span
               className="text-primary underline font-semibold"
-              onClick={() => utils.openTelegramLink(CATIA_GLOBAL_CHAT_URL)}
+              // onClick={() => utils.openTelegramLink(CATIA_GLOBAL_CHAT_URL)}
+              onClick={() => window.open(CATIA_GLOBAL_CHAT_URL, "_blank")}
             >
               Catia ANN
             </span>{" "}

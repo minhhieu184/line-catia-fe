@@ -1,4 +1,4 @@
-import { useUtils } from "@telegram-apps/sdk-react";
+// import { useUtils } from "@telegram-apps/sdk-react";
 import { useMemo, useState } from "react";
 import Markdown from "react-markdown";
 import { useNavigate } from "react-router-dom";
@@ -73,7 +73,7 @@ export default function QuizDetailPage() {
   );
   const [link, setLink] = useState<number>(-1);
   useGameCheckSocialTask(link, game?.slug || "");
-  const utils = useUtils();
+  // const utils = useUtils();
   const navigate = useNavigate();
   const { data: userGame, mutate: mutateUserGame } = useGameMe();
   const {
@@ -260,9 +260,10 @@ export default function QuizDetailPage() {
                     }`}
                     onClick={() => {
                       setLink(item.id);
-                      item.link_type.includes("telegram")
-                        ? utils.openTelegramLink(item.ref_url || item.url)
-                        : utils.openLink(item.ref_url || item.url);
+                      // item.link_type.includes("telegram")
+                      //   ? utils.openTelegramLink(item.ref_url || item.url)
+                      //   : utils.openLink(item.ref_url || item.url);
+                      window.open(item.ref_url || item.url);
                     }}
                   >
                     {item.link_type.includes("telegram") ? (
