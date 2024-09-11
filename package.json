@@ -12,6 +12,7 @@
     "lint": "pnpm biome check --apply src"
   },
   "dependencies": {
+    "@line/liff": "^2.24.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-progress": "^1.0.3",
     "@radix-ui/react-scroll-area": "^1.0.5",

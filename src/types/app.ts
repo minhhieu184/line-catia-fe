@@ -156,6 +156,7 @@ export interface User {
   is_new_user: boolean;
   avatar: string;
   available_rewards: Reward[];
+  accessToken: string;
 }
 
 export interface QuestionTranslation {

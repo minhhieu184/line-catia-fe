@@ -1,7 +1,7 @@
-import type { Arena, Extra, GameDetail } from "@/types/app";
-import { persist } from "zustand/middleware";
-import { shallow } from "zustand/shallow";
-import { createWithEqualityFn } from "zustand/traditional";
+import type { Arena, Extra, GameDetail } from '@/types/app';
+import { persist } from 'zustand/middleware';
+import { shallow } from 'zustand/shallow';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 export interface Checkpoints {
   [index: string]: boolean;
@@ -9,8 +9,11 @@ export interface Checkpoints {
 
 interface CatiaStore {
   // initDataRaw
-  token?: string;
-  setToken(v: string | undefined): void;
+  idToken?: string;
+  setIdToken(v: string | null): void;
+
+  accessToken?: string;
+  setAccessToken(v: string | undefined): void;
 
   game?: GameDetail; // control the game settings for the current game
   setGame(v?: GameDetail): void;
@@ -75,7 +78,7 @@ const useCatiaStore = createWithEqualityFn<CatiaStore>()(
       rewardPopup: false,
       luckyPopup: false,
       luckyResultPopup: false,
-      leaderboard: "overall_weekly",
+      leaderboard: 'overall_weekly',
       inviteDialogOpen: false,
       profileBottomSheetOpen: false,
       quizProgressDialogOpen: false,
@@ -86,8 +89,11 @@ const useCatiaStore = createWithEqualityFn<CatiaStore>()(
       speedUpSheetOpen: false,
       quizDetailDialog: false,
 
-      setToken(v) {
-        set({ token: v });
+      setIdToken(v) {
+        set({ idToken: v });
+      },
+      setAccessToken(v) {
+        set({ accessToken: v });
       },
       setGame(v) {
         set({ game: v });
@@ -155,9 +161,10 @@ const useCatiaStore = createWithEqualityFn<CatiaStore>()(
       },
     }),
     {
-      name: "catia-store",
+      name: 'catia-store',
       partialize: (state) => ({
-        token: state.token,
+        idToken: state.idToken,
+        accessToken: state.accessToken,
         game: state.game,
         arena: state.arena,
         referrer: state.referrer,
