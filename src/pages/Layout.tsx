@@ -17,7 +17,7 @@ const dumpLiffData = {
   accessToken:
     'eyJhbGciOiJIUzI1NiJ9.2a9byeJwRZqRiW2-39Q2I7PwTyNr0yzqEGoV0TFb804Rfn5e4KQFVMtJOzKKJJMP16pwIe-1vnZsTtxsvAR7E35uiWQQbV8z33xeQcJJedQ_ga_7gepkSYROiBDeRxj1yWfcX2qHPG5kKwSpftkobpJBi1ZY3c7zHVkv69Tw4po.Kb9ydc_CBsXusCTlMZ32_bMYsAZyUuuMnev0kVKCZaI',
   idToken:
-    'eyJraWQiOiJhMmE0NTlhZWM1YjY1ZmE0ZThhZGQ1Yzc2OTdjNzliZTQ0NWFlMzEyYmJjZDZlZWY4ZmUwOWI1YmI4MjZjZjNkIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVWM0MzY0YTUyODM2Nzc5NjljNjg3ZGRiYjY5MzA5MWQxIiwiYXVkIjoiMjAwNjI5NjA4OCIsImV4cCI6MTcyNjA0MTY5MywiaWF0IjoxNzI2MDM4MDkzLCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiUGjhuqFtIFRy4bqnbiBNaW5oIEhp4bq_dSJ9.PiQJW_fEqX7xN70v2WN-c6uMid7JpPByAoDtkH-3l0CFFI6QojFA6Ku5j_Nk08LRkp2O4v1Yh4oJMNMAeqwdrQ',
+    'eyJraWQiOiJhMmE0NTlhZWM1YjY1ZmE0ZThhZGQ1Yzc2OTdjNzliZTQ0NWFlMzEyYmJjZDZlZWY4ZmUwOWI1YmI4MjZjZjNkIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVWM0MzY0YTUyODM2Nzc5NjljNjg3ZGRiYjY5MzA5MWQxIiwiYXVkIjoiMjAwNjI5NjA4OCIsImV4cCI6MTcyNjE0MjcwNCwiaWF0IjoxNzI2MTM5MTA0LCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiUGjhuqFtIFRy4bqnbiBNaW5oIEhp4bq_dSJ9.zyL8xrhPdL-SLdqYtAlE3HxHExgTu6rm88UiE16JfkE2Go5nZs32MBnes9lG-LhC9npKtmcvTMiIrXR6xcmdFw',
   isLoggedIn: true,
   getDecodedIDToken() {
     return this._DecodedIDToken;
@@ -59,7 +59,7 @@ const useLiff = () => {
     liff
       .init({
         liffId: import.meta.env.VITE_LIFF_ID,
-        // withLoginOnExternalBrowser: true,
+        withLoginOnExternalBrowser: true,
       })
       .then(() => {
         console.log('LIFF init succeeded.');
@@ -115,7 +115,6 @@ export const LayoutFull: FC = () => {
 
   useEffect(() => {
     // setIdToken(initDataRaw);
-    if (idToken) return;
     liff
       .init({
         liffId: import.meta.env.VITE_LIFF_ID,
@@ -123,13 +122,14 @@ export const LayoutFull: FC = () => {
       })
       .then(() => {
         const idToken = liff.getIDToken();
+        console.log('.then ~ idToken:', idToken);
         setIdToken(idToken);
         if (!idToken) setIdToken(dumpLiffData.idToken);
       })
       .catch((e: Error) => {
         console.log('LIFF init failed.', e);
       });
-  }, [idToken, setIdToken]);
+  }, [setIdToken]);
 
   useEffect(() => {
     setAccessToken(user?.accessToken);

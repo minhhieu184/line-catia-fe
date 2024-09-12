@@ -17,10 +17,10 @@ const limit = 10;
 
 export default function FriendsPage() {
   const { t } = useTranslation('friends');
-  const token = useCatiaStore((state) => state.idToken);
   const inviteDialogOpen = useCatiaStore((state) => state.inviteDialogOpen);
   const setInviteDialogOpen = useCatiaStore((state) => state.setInviteDialogOpen);
   const { data: user, mutate: mutateUser } = useMe();
+  const token = user?.accessToken;
   const { dispatch: actionClaimAll, isMutating: isLoading } = useFriendClaimAll();
   const [allFriends, setAllFriends] = useState<Friend[]>([]);
   const [totalFrens, setTotalFrens] = useState(0);

@@ -50,7 +50,8 @@ export default function MoonTap() {
   const { data: me, mutate: mutateMe } = useMe();
   const { data: moon, isLoading: loadingMoon, mutate: mutateMoon } = useMoon(!me);
 
-  const token = useCatiaStore((state) => state.idToken);
+  const { data: user } = useMe();
+  const token = user?.accessToken;
 
   const isExpired = useMemo(() => {
     if (!moon) return true;

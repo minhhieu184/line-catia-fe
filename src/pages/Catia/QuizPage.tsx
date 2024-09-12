@@ -27,7 +27,7 @@ export default function QuizPage() {
   const { dispatch: actionAnswer } = useGameActionAnswer();
   const { data: user } = useMe();
   const game = useCatiaStore((state) => state.game);
-  const token = useCatiaStore((state) => state.idToken);
+  const token = user?.accessToken
   const quizSpinDialogOpen = useCatiaStore((state) => state.quizSpinDialogOpen);
   const setQuizSpinDialogOpen = useCatiaStore((state) => state.setQuizSpinDialogOpen);
   const quizSummaryDialogOpen = useCatiaStore((state) => state.quizSummaryDialogOpen);

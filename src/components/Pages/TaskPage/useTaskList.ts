@@ -1,10 +1,12 @@
 import { fetchTyped } from '@/lib/apiv2.ts';
+import { useMe } from '@/lib/swr';
 import useCatiaStore from '@/lib/useCatiaStore.ts';
 import type { TaskGroup } from '@/types/app.ts';
 import useSWRImmutable from 'swr/immutable';
 
 export const useTaskList = (shouldDisabled: boolean) => {
-  const token = useCatiaStore((state) => state.idToken);
+  const { data: user } = useMe();
+  const token = user?.accessToken;
   const { data, error, isLoading, mutate } = useSWRImmutable(
     token && !shouldDisabled ? '/socials/tasks' : null,
     async (url) => {
