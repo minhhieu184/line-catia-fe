@@ -5,8 +5,7 @@ import type { TaskGroup } from '@/types/app.ts';
 import useSWRImmutable from 'swr/immutable';
 
 export const useTaskList = (shouldDisabled: boolean) => {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading, mutate } = useSWRImmutable(
     token && !shouldDisabled ? '/socials/tasks' : null,
     async (url) => {

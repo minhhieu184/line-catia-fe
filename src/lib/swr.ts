@@ -21,10 +21,11 @@ import useSWRImmutable from 'swr/immutable';
 import useSWRMutation from 'swr/mutation';
 import { fetchTyped } from './apiv2';
 import { API_V1 } from './constants';
+import { useEffect } from 'react';
 
 export function useMe() {
   const idToken = useCatiaStore((state) => state.idToken);
-  // console.log('useMe ~ idToken:', idToken);
+  console.log('useMe ~ idToken:', idToken);
   // console.log('useMe ~ token:', token)
   const referrer = useCatiaStore((state) => state.referrer);
   const url = idToken ? (referrer ? `/user/me?refCode=${referrer || ''}` : '/user/me') : null;
@@ -37,6 +38,13 @@ export function useMe() {
       },
     });
   });
+  const accessToken = data?.data?.token;
+  const setAccessToken = useCatiaStore((state) => state.setAccessToken);
+  useEffect(() => {
+    if (accessToken) {
+      setAccessToken(accessToken);
+    }
+  }, [accessToken, setAccessToken]);
 
   return {
     data: data?.data
@@ -57,8 +65,7 @@ export function useGameMe(shouldDisabled?: boolean) {
   const gamePlay = matches.find((v) => v.id === 'quiz-detail');
   const quizGame = matches.find((v) => v.id === 'quiz-game');
   const arenaDetail = matches.find((v) => v.id === 'catiarena-detail');
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const game = useCatiaStore((state) => state.game);
   const url = token && (gamePlay || quizGame || arenaDetail) && !shouldDisabled ? `/game/${game?.slug}/me` : null;
   const { data, error, isLoading, mutate } = useSWR(url, (url) =>
@@ -77,8 +84,7 @@ export function useGameScoreMine() {
   const quizGame = matches.find((v) => v.id === 'quiz-game');
   const gameOver = matches.find((v) => v.id === 'end-game');
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading } = useSWR(
     game && token && (gameLeaderboard || quizGame || gameOver) ? `/game/${game?.slug}/scores` : null,
     (url) =>
@@ -94,8 +100,7 @@ export function useGameScoreMine() {
 
 export function useGameSessionScore() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading } = useSWR(game && token ? `/game/${game?.slug}/last_session_score` : null, (url) =>
     fetchTyped<ScoreHistory>(url, {
       headers: {
@@ -112,8 +117,7 @@ export function useGameSessionMine() {
   const gamePlay = matches.find((v) => v.id === 'quiz-detail');
   const arenaDetail = matches.find((v) => v.id === 'catiarena-detail');
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const url = !game || !token || (!gamePlay && !arenaDetail) ? null : `/game/${game?.slug}/current_session`;
   const { data, error, isLoading, mutate } = useSWR(url, (url) =>
     fetchTyped<Session>(url, {
@@ -129,8 +133,7 @@ export function useGameSessionMine() {
 export function useGameLeaderboard() {
   const game = useCatiaStore((state) => state.game);
   const setGame = useCatiaStore((state) => state.setGame);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const pools = useCatiaStore((state) => state.pools);
   if (!game) {
     setGame(pools?.[0]);
@@ -148,8 +151,7 @@ export function useGameLeaderboard() {
 
 export function useArenaLeaderboard() {
   const arena = useCatiaStore((state) => state.arena);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { data, error, isLoading } = useSWR(token && arena?.slug ? `/arena/${arena?.slug}/leaderboard` : null, (url) =>
     fetchTyped<Leaderboard>(url, {
@@ -163,8 +165,7 @@ export function useArenaLeaderboard() {
 }
 
 export function useGeneralLeaderboard() {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const leaderboard = useCatiaStore((state) => state.leaderboard);
   const { data, error, isLoading } = useSWR(token ? `/leaderboard/${leaderboard}` : null, (url) =>
     fetchTyped<Leaderboard>(url, {
@@ -178,8 +179,7 @@ export function useGeneralLeaderboard() {
 }
 
 export function useGameFreebies(shouldDisabled: boolean) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading, mutate } = useSWRImmutable(
     token && !shouldDisabled ? '/user/freebies' : null,
     (url) =>
@@ -201,8 +201,7 @@ export function useGameFreebies(shouldDisabled: boolean) {
 }
 
 export function useGameSocialTasks() {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading } = useSWR(token ? '/socials/tasks/overall' : null, (url) =>
     fetchTyped<SocialTasks>(url, {
       headers: {
@@ -215,8 +214,7 @@ export function useGameSocialTasks() {
 }
 
 export function useGameCheckSocialTask(socialLink: number, game: string) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading, mutate } = useSWR(
     token && socialLink >= 0 ? `/socials/join/${game}/${socialLink}` : null,
     (url) =>
@@ -232,8 +230,7 @@ export function useGameCheckSocialTask(socialLink: number, game: string) {
 
 export function useGameActionEndSession() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(`/game/${game?.slug}/current_session/end`, (url: string) => {
     return fetchTyped<Session>(url, {
@@ -251,8 +248,7 @@ export function useGameActionEndSession() {
 
 export function useGameActionUseLifeline() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(
     `/game/${game?.slug}/current_session/assistance`,
@@ -276,8 +272,7 @@ export function useGameActionUseLifeline() {
 
 export function useGameUseLifelineByStar() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(`/game/${game?.slug}/convert-lifeline`, (url: string) => {
     return fetchTyped<any>(url, {
@@ -295,8 +290,7 @@ export function useGameUseLifelineByStar() {
 
 export function useGameActionAnswer() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(
     `/game/${game?.slug}/current_session/answer`,
@@ -318,8 +312,7 @@ export function useGameActionAnswer() {
 
 export function useGameActionBoost() {
   const game = useCatiaStore((state) => state.game);
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(`/game/${game?.slug}/reduce-countdown`, (url: string) => {
     return fetchTyped<Session>(url, {
@@ -336,8 +329,7 @@ export function useGameActionBoost() {
 }
 
 export function useFreebiesClaim(action: string) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger } = useSWRMutation(!token || !action ? null : `/user/freebies/claim/${action}`, (url: string) => {
     return fetchTyped<any>(url, {
@@ -352,8 +344,7 @@ export function useFreebiesClaim(action: string) {
 }
 
 export function useFriends({ page, limit }: { page: number; limit: number }) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { data, error, isLoading, mutate } = useSWR(
     token ? `/user/friends?page=${page}&limit=${limit}` : null,
@@ -373,8 +364,7 @@ export function useFriends({ page, limit }: { page: number; limit: number }) {
 }
 
 export function useFriendClaimAll() {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
 
   const { trigger, isMutating } = useSWRMutation(token ? `/user/boost/claim-all` : null, (url: string) => {
     return fetchTyped<any>(url, {
@@ -388,8 +378,7 @@ export function useFriendClaimAll() {
 }
 
 export function useFriendClaim({ fId, page, limit }: { fId: number; page: number; limit: number }) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { trigger } = useSWRMutation(
     !token || !fId ? null : `/user/boost/claim/${fId}?page=${page}&limit=${limit}`,
     (url: string) => {
@@ -416,8 +405,7 @@ export function useGamesList() {
 
 export function useCheckGamesList(shouldDisabled: boolean) {
   const url = '/game/game-list';
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading } = useSWR(token && !shouldDisabled ? url : null, (url) => {
     return fetchTyped<Game[]>(url, {
       method: 'GET',
@@ -431,8 +419,7 @@ export function useCheckGamesList(shouldDisabled: boolean) {
 }
 
 export function useNewGame(game: string) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { data, error, isLoading, mutate } = useSWR(token && game ? `/game/${game}` : null, (url) =>
     fetchTyped<GameDetail>(url, {
       method: 'GET',
@@ -445,8 +432,7 @@ export function useNewGame(game: string) {
 }
 
 export function useMoon(shouldDisabled: boolean) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const url = token && !shouldDisabled ? `${API_V1}/moon` : null;
   const { data, error, isLoading, mutate } = useSWRImmutable(url, (url) => {
     return fetchTyped<Moon>(url, {
@@ -460,8 +446,7 @@ export function useMoon(shouldDisabled: boolean) {
 }
 
 export function useArenaList(shouldDisabled: boolean) {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const url = token && !shouldDisabled ? `${API_V1}/arenas` : null;
   const { data, error, isLoading, mutate } = useSWRImmutable(url, (url) => {
     return fetchTyped<Arena[]>(url, {
@@ -475,8 +460,7 @@ export function useArenaList(shouldDisabled: boolean) {
 }
 
 export function useArenaDetail() {
-  const { data: user } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const arena = useCatiaStore((state) => state.arena);
   const url = token ? `${API_V1}/arena/${arena?.slug || 'catia'}` : null;
   const { data, error, isLoading, mutate } = useSWR(url, (url) => {

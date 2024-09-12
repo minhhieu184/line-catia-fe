@@ -51,7 +51,7 @@ export default function UserPersonalSheet({
   const tonWallet = useTonWallet();
   const [tonConnectUI] = useTonConnectUI();
   const firstProofLoading = useRef<boolean>(true);
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const hasNft = !!user?.avatar;
 
   const randomString = (length = 12) => {

@@ -10,7 +10,7 @@ export interface Checkpoints {
 interface CatiaStore {
   // initDataRaw
   idToken?: string;
-  setIdToken(v: string | null): void;
+  setIdToken(v: string | undefined): void;
 
   accessToken?: string;
   setAccessToken(v: string | undefined): void;

@@ -20,7 +20,7 @@ export default function FriendsPage() {
   const inviteDialogOpen = useCatiaStore((state) => state.inviteDialogOpen);
   const setInviteDialogOpen = useCatiaStore((state) => state.setInviteDialogOpen);
   const { data: user, mutate: mutateUser } = useMe();
-  const token = user?.accessToken;
+  const token = useCatiaStore((state) => state.accessToken);
   const { dispatch: actionClaimAll, isMutating: isLoading } = useFriendClaimAll();
   const [allFriends, setAllFriends] = useState<Friend[]>([]);
   const [totalFrens, setTotalFrens] = useState(0);

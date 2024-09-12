@@ -17,7 +17,7 @@ const dumpLiffData = {
   accessToken:
     'eyJhbGciOiJIUzI1NiJ9.2a9byeJwRZqRiW2-39Q2I7PwTyNr0yzqEGoV0TFb804Rfn5e4KQFVMtJOzKKJJMP16pwIe-1vnZsTtxsvAR7E35uiWQQbV8z33xeQcJJedQ_ga_7gepkSYROiBDeRxj1yWfcX2qHPG5kKwSpftkobpJBi1ZY3c7zHVkv69Tw4po.Kb9ydc_CBsXusCTlMZ32_bMYsAZyUuuMnev0kVKCZaI',
   idToken:
-    'eyJraWQiOiJhMmE0NTlhZWM1YjY1ZmE0ZThhZGQ1Yzc2OTdjNzliZTQ0NWFlMzEyYmJjZDZlZWY4ZmUwOWI1YmI4MjZjZjNkIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVWM0MzY0YTUyODM2Nzc5NjljNjg3ZGRiYjY5MzA5MWQxIiwiYXVkIjoiMjAwNjI5NjA4OCIsImV4cCI6MTcyNjE0MjcwNCwiaWF0IjoxNzI2MTM5MTA0LCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiUGjhuqFtIFRy4bqnbiBNaW5oIEhp4bq_dSJ9.zyL8xrhPdL-SLdqYtAlE3HxHExgTu6rm88UiE16JfkE2Go5nZs32MBnes9lG-LhC9npKtmcvTMiIrXR6xcmdFw',
+    'eyJraWQiOiJhNzk2OGMyZWExNWYwZjQxNjM1ZGU1ZTA4ODI5MDQ5MWIwMjMxYTU2YTQ5Y2M4YTZjZDZlZDQ0MTcyN2EyNTJmIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVWM0MzY0YTUyODM2Nzc5NjljNjg3ZGRiYjY5MzA5MWQxIiwiYXVkIjoiMjAwNjI5NjA4OCIsImV4cCI6MTcyNjE3MjI4NSwiaWF0IjoxNzI2MTY4Njg1LCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiUGjhuqFtIFRy4bqnbiBNaW5oIEhp4bq_dSJ9.AkMpXMQ7UTXwoBUJnjzqB453aPC6MDQBWL4PeM0I80dPwMr-GQCkuZFG2YSGlmKR2RHmHqfJ5j1fBSE3hWY7JQ',
   isLoggedIn: true,
   getDecodedIDToken() {
     return this._DecodedIDToken;
@@ -54,7 +54,7 @@ const dumpLiffData = {
   // statusMessage?: string;
 };
 
-const useLiff = () => {
+const useLiffDebug = () => {
   useEffect(() => {
     liff
       .init({
@@ -93,35 +93,19 @@ const useLiff = () => {
   }, []);
 };
 
-export const LayoutFull: FC = () => {
-  // useLiff();
+const useLayout = () => {
+  // useLiffDebug();
 
-  // const viewport = useViewport();
-  // const { initDataRaw } = retrieveLaunchParams();
-  // const initDataRaw =
-  //   'query_id=AAH0NgNsAgAAAPQ2A2wDJjrc&user=%7B%22id%22%3A6107117300%2C%22first_name%22%3A%22Minh%20Hi%E1%BA%BFu%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22mhieu184%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725957206&hash=802653264f2912852370aad1779742da8af41eaf9c0e88cb32cb6ab8baccbbb3';
-  // const lp = useLaunchParams();
-  const idToken = useCatiaStore((state) => state.idToken);
   const setIdToken = useCatiaStore((state) => state.setIdToken);
-  const setAccessToken = useCatiaStore((state) => state.setAccessToken);
-  const { data: user } = useMe();
-
-  // useEffect(() => {
-  //   if (!viewport) return;
-  //   if (viewport.isStable && !viewport.isExpanded) {
-  //     viewport.expand();
-  //   }
-  // }, [viewport]);
 
   useEffect(() => {
-    // setIdToken(initDataRaw);
     liff
       .init({
         liffId: import.meta.env.VITE_LIFF_ID,
-        // withLoginOnExternalBrowser: true,
+        withLoginOnExternalBrowser: true,
       })
       .then(() => {
-        const idToken = liff.getIDToken();
+        const idToken = liff.getIDToken() || undefined;
         console.log('.then ~ idToken:', idToken);
         setIdToken(idToken);
         if (!idToken) setIdToken(dumpLiffData.idToken);
@@ -130,18 +114,10 @@ export const LayoutFull: FC = () => {
         console.log('LIFF init failed.', e);
       });
   }, [setIdToken]);
+};
 
-  useEffect(() => {
-    setAccessToken(user?.accessToken);
-  }, [user?.accessToken, setAccessToken]);
-
-  // useEffect(() => {
-  //   if (lp.startParam) {
-  //     useCatiaStore.setState({
-  //       referrer: lp.startParam,
-  //     });
-  //   }
-  // }, [lp.startParam]);
+export const LayoutFull: FC = () => {
+  useLayout();
 
   return (
     <BackButtonHandler>
@@ -164,31 +140,7 @@ export const LayoutFull: FC = () => {
 };
 
 export const LayoutWithoutHeaderAndNav: FC = () => {
-  // const viewport = useViewport();
-  // const { initDataRaw } = retrieveLaunchParams();
-  const initDataRaw =
-    'query_id=AAH0NgNsAgAAAPQ2A2wDJjrc&user=%7B%22id%22%3A6107117300%2C%22first_name%22%3A%22Minh%20Hi%E1%BA%BFu%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22mhieu184%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725957206&hash=802653264f2912852370aad1779742da8af41eaf9c0e88cb32cb6ab8baccbbb3';
-  // const lp = useLaunchParams();
-  const setIdToken = useCatiaStore((state) => state.setIdToken);
-
-  // useEffect(() => {
-  //   if (!viewport) return;
-  //   if (viewport.isStable && !viewport.isExpanded) {
-  //     viewport.expand();
-  //   }
-  // }, [viewport]);
-
-  useEffect(() => {
-    setIdToken(initDataRaw);
-  }, [initDataRaw, setIdToken]);
-
-  // useEffect(() => {
-  //   if (lp.startParam) {
-  //     useCatiaStore.setState({
-  //       referrer: lp.startParam,
-  //     });
-  //   }
-  // }, [lp.startParam]);
+  useLayout();
 
   return (
     <BackButtonHandler>
@@ -207,31 +159,7 @@ export const LayoutWithoutHeaderAndNav: FC = () => {
 };
 
 export const LayoutWithoutHeader: FC = () => {
-  // const viewport = useViewport();
-  // const { initDataRaw } = retrieveLaunchParams();
-  const initDataRaw =
-    'query_id=AAH0NgNsAgAAAPQ2A2wDJjrc&user=%7B%22id%22%3A6107117300%2C%22first_name%22%3A%22Minh%20Hi%E1%BA%BFu%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22mhieu184%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725957206&hash=802653264f2912852370aad1779742da8af41eaf9c0e88cb32cb6ab8baccbbb3';
-  // const lp = useLaunchParams();
-  const setIdToken = useCatiaStore((state) => state.setIdToken);
-
-  // useEffect(() => {
-  //   if (!viewport) return;
-  //   if (viewport.isStable && !viewport.isExpanded) {
-  //     viewport.expand();
-  //   }
-  // }, [viewport]);
-
-  useEffect(() => {
-    setIdToken(initDataRaw);
-  }, [initDataRaw, setIdToken]);
-
-  // useEffect(() => {
-  //   if (lp.startParam) {
-  //     useCatiaStore.setState({
-  //       referrer: lp.startParam,
-  //     });
-  //   }
-  // }, [lp.startParam]);
+  useLayout();
 
   return (
     <BackButtonHandler>
@@ -251,31 +179,7 @@ export const LayoutWithoutHeader: FC = () => {
 };
 
 export const LayoutWithoutNav: FC = () => {
-  // const viewport = useViewport();
-  // const { initDataRaw } = retrieveLaunchParams();
-  const initDataRaw =
-    'query_id=AAH0NgNsAgAAAPQ2A2wDJjrc&user=%7B%22id%22%3A6107117300%2C%22first_name%22%3A%22Minh%20Hi%E1%BA%BFu%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22mhieu184%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725957206&hash=802653264f2912852370aad1779742da8af41eaf9c0e88cb32cb6ab8baccbbb3';
-  // const lp = useLaunchParams();
-  const setIdToken = useCatiaStore((state) => state.setIdToken);
-
-  // useEffect(() => {
-  //   if (!viewport) return;
-  //   if (viewport.isStable && !viewport.isExpanded) {
-  //     viewport.expand();
-  //   }
-  // }, [viewport]);
-
-  useEffect(() => {
-    setIdToken(initDataRaw);
-  }, [initDataRaw, setIdToken]);
-
-  // useEffect(() => {
-  //   if (lp.startParam) {
-  //     useCatiaStore.setState({
-  //       referrer: lp.startParam,
-  //     });
-  //   }
-  // }, [lp.startParam]);
+  useLayout();
 
   return (
     <BackButtonHandler>
@@ -295,31 +199,7 @@ export const LayoutWithoutNav: FC = () => {
 };
 
 export const LayoutCatiarena: FC = () => {
-  // const viewport = useViewport();
-  // const { initDataRaw } = retrieveLaunchParams();
-  const initDataRaw =
-    'query_id=AAH0NgNsAgAAAPQ2A2wDJjrc&user=%7B%22id%22%3A6107117300%2C%22first_name%22%3A%22Minh%20Hi%E1%BA%BFu%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22mhieu184%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%7D&auth_date=1725957206&hash=802653264f2912852370aad1779742da8af41eaf9c0e88cb32cb6ab8baccbbb3';
-  // const lp = useLaunchParams();
-  const setIdToken = useCatiaStore((state) => state.setIdToken);
-
-  // useEffect(() => {
-  //   if (!viewport) return;
-  //   if (viewport.isStable && !viewport.isExpanded) {
-  //     viewport.expand();
-  //   }
-  // }, [viewport]);
-
-  useEffect(() => {
-    setIdToken(initDataRaw);
-  }, [initDataRaw, setIdToken]);
-
-  // useEffect(() => {
-  //   if (lp.startParam) {
-  //     useCatiaStore.setState({
-  //       referrer: lp.startParam,
-  //     });
-  //   }
-  // }, [lp.startParam]);
+  useLayout();
 
   return (
     <BackButtonHandler>
