@@ -26,9 +26,8 @@ import { useEffect } from 'react';
 export function useMe() {
   const idToken = useCatiaStore((state) => state.idToken);
   console.log('useMe ~ idToken:', idToken);
-  // console.log('useMe ~ token:', token)
-  const referrer = useCatiaStore((state) => state.referrer);
-  const url = idToken ? (referrer ? `/user/me?refCode=${referrer || ''}` : '/user/me') : null;
+  const referrerId = useCatiaStore((state) => state.referrerId);
+  const url = idToken ? (referrerId ? `/user/me?refCode=${referrerId || ''}` : '/user/me') : null;
   const { data, error, isLoading, mutate } = useSWRImmutable(url, (url) => {
     localStorage.setItem('is_first_app', 'false');
     localStorage.setItem('is_reward', 'false');

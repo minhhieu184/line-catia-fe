@@ -75,7 +75,7 @@ function FriendContent({
   user?: User;
 }) {
   const { t } = useTranslation("common");
-  const referLink = `${DIRECT_LINK}?startapp=${user?.ref_code || user?.id}`;
+  const referLink = `${DIRECT_LINK}?ref=${user?.ref_code || user?.id}`;
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
     ref?.current && qrCode.append(ref.current);
@@ -112,14 +112,14 @@ function FriendContent({
         <div ref={ref} className="absolute rounded-xl overflow-hidden" />
       </div>
       <div className="flex justify-center items-center gap-3">
-        <FriendButton
+        {/* <FriendButton
           icon={<ShareIcon />}
           name={t("share")}
           onClick={() => {
             if (!user?.username) return;
             window.open(shareTelegram(referLink));
           }}
-        />
+        /> */}
         <CopyToClipboard
           text={referLink}
           onCopy={() =>

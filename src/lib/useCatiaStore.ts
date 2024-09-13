@@ -15,6 +15,9 @@ interface CatiaStore {
   accessToken?: string;
   setAccessToken(v: string | undefined): void;
 
+  referrerId?: string | null;
+  setReferrerId(v: string | undefined | null): void;
+
   game?: GameDetail; // control the game settings for the current game
   setGame(v?: GameDetail): void;
 
@@ -56,8 +59,6 @@ interface CatiaStore {
   leaderboard: string;
   setLeaderboard(v: string): void;
 
-  referrer?: string;
-
   inviteThresholdModal: boolean;
   joinSocialModal: boolean;
   useBoostModal: boolean;
@@ -94,6 +95,9 @@ const useCatiaStore = createWithEqualityFn<CatiaStore>()(
       },
       setAccessToken(v) {
         set({ accessToken: v });
+      },
+      setReferrerId(v) {
+        set({ referrerId: v });
       },
       setGame(v) {
         set({ game: v });
@@ -165,9 +169,9 @@ const useCatiaStore = createWithEqualityFn<CatiaStore>()(
       partialize: (state) => ({
         idToken: state.idToken,
         accessToken: state.accessToken,
+        referrerId: state.referrerId,
         game: state.game,
         arena: state.arena,
-        referrer: state.referrer,
         newsId: state.newsId,
         newsLastCheckedTime: state.newsLastCheckedTime,
         leaderboardNoticeCheckedv2: state.leaderboardNoticeCheckedv2,

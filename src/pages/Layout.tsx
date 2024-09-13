@@ -1,11 +1,6 @@
 import { Header } from '@/components/Header/Header';
 import { Nav } from '@/components/Nav/Nav';
 import { ScrollArea } from '@/components/ui/scroll-area';
-// import {
-//   retrieveLaunchParams,
-//   useLaunchParams,
-//   useViewport,
-// } from "@telegram-apps/sdk-react";
 import { type FC, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import useCatiaStore from '../lib/useCatiaStore';
@@ -13,53 +8,21 @@ import BackButtonHandler from './BackButtonHandler';
 import { liff } from '@line/liff';
 import { useMe } from '@/lib/swr';
 
-const dumpLiffData = {
-  accessToken:
-    'eyJhbGciOiJIUzI1NiJ9.2a9byeJwRZqRiW2-39Q2I7PwTyNr0yzqEGoV0TFb804Rfn5e4KQFVMtJOzKKJJMP16pwIe-1vnZsTtxsvAR7E35uiWQQbV8z33xeQcJJedQ_ga_7gepkSYROiBDeRxj1yWfcX2qHPG5kKwSpftkobpJBi1ZY3c7zHVkv69Tw4po.Kb9ydc_CBsXusCTlMZ32_bMYsAZyUuuMnev0kVKCZaI',
-  idToken:
-    'eyJraWQiOiJhNzk2OGMyZWExNWYwZjQxNjM1ZGU1ZTA4ODI5MDQ5MWIwMjMxYTU2YTQ5Y2M4YTZjZDZlZDQ0MTcyN2EyNTJmIiwidHlwIjoiSldUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2FjY2Vzcy5saW5lLm1lIiwic3ViIjoiVWM0MzY0YTUyODM2Nzc5NjljNjg3ZGRiYjY5MzA5MWQxIiwiYXVkIjoiMjAwNjI5NjA4OCIsImV4cCI6MTcyNjE3MjI4NSwiaWF0IjoxNzI2MTY4Njg1LCJhbXIiOlsibGluZXNzbyJdLCJuYW1lIjoiUGjhuqFtIFRy4bqnbiBNaW5oIEhp4bq_dSJ9.AkMpXMQ7UTXwoBUJnjzqB453aPC6MDQBWL4PeM0I80dPwMr-GQCkuZFG2YSGlmKR2RHmHqfJ5j1fBSE3hWY7JQ',
-  isLoggedIn: true,
-  getDecodedIDToken() {
-    return this._DecodedIDToken;
-  },
-  _DecodedIDToken: {
-    iss: 'https://access.line.me',
-    sub: 'Uc4364a5283677969c687ddbb693091d1',
-    aud: '2006296088',
-    exp: 1726041693,
-    iat: 1726038093,
-    amr: ['linesso'],
-    name: 'Phạm Trần Minh Hiếu',
-  },
-  getAppLanguage() {
-    return this._AppLanguage;
-  },
-  _AppLanguage: 'vi-VN',
-  getVersion() {
-    return this._Version;
-  },
-  _Version: '2.24.0',
-  isInClient: false,
-  getOS() {
-    return this._OS;
-  },
-  _OS: 'web',
-  getLineVersion() {
-    return this._LineVersion;
-  },
-  _LineVersion: null,
-  // userId: string;
-  // displayName: string;
-  // pictureUrl?: string;
-  // statusMessage?: string;
-};
-
 const useLiffDebug = () => {
   useEffect(() => {
     liff
       .init({
         liffId: import.meta.env.VITE_LIFF_ID,
-        withLoginOnExternalBrowser: true,
+        // withLoginOnExternalBrowser: true,
+      })
+      .then(() => {
+        if (liff.isLoggedIn() || liff.isInClient()) return;
+        // get query params
+        const queryParams = new URLSearchParams(window.location.search);
+        const referrerId = queryParams.get('ref');
+        const endpointUrl = liff.getContext()?.endpointUrl;
+        const redirectUri = endpointUrl && referrerId ? `${endpointUrl}?ref=${referrerId}` : undefined;
+        liff.login({ redirectUri });
       })
       .then(() => {
         console.log('LIFF init succeeded.');
@@ -77,15 +40,12 @@ const useLiffDebug = () => {
           isInClient: liff.isInClient(),
           getOS: liff.getOS(),
           getLineVersion: liff.getLineVersion(),
+          context: liff.getContext(),
         });
 
-        // userId: string;
-        // displayName: string;
-        // pictureUrl?: string;
-        // statusMessage?: string;
-        const xx = liff.getProfilePlus();
-        if (!xx) return;
-        const { regionCode } = xx;
+        const profilePlus = liff.getProfilePlus();
+        if (!profilePlus) return;
+        const { regionCode } = profilePlus;
       })
       .catch((e: Error) => {
         console.log('LIFF init failed.', e);
@@ -97,18 +57,28 @@ const useLayout = () => {
   // useLiffDebug();
 
   const setIdToken = useCatiaStore((state) => state.setIdToken);
+  const setReferrerId = useCatiaStore((state) => state.setReferrerId);
 
   useEffect(() => {
     liff
-      .init({
-        liffId: import.meta.env.VITE_LIFF_ID,
-        withLoginOnExternalBrowser: true,
+      .init({ liffId: import.meta.env.VITE_LIFF_ID })
+      .then(() => {
+        if (liff.isLoggedIn() || liff.isInClient()) return;
+        // get query params
+        const queryParams = new URLSearchParams(window.location.search);
+        const referrerId = queryParams.get('ref');
+        const endpointUrl = liff.getContext()?.endpointUrl;
+        const redirectUri = endpointUrl && referrerId ? `${endpointUrl}?ref=${referrerId}` : undefined;
+        liff.login({ redirectUri });
       })
       .then(() => {
         const idToken = liff.getIDToken() || undefined;
         console.log('.then ~ idToken:', idToken);
         setIdToken(idToken);
-        if (!idToken) setIdToken(dumpLiffData.idToken);
+        // if (!idToken) setIdToken(dumpLiffData.idToken);
+        const queryParams = new URLSearchParams(window.location.search);
+        const referrerId = queryParams.get('ref');
+        setReferrerId(referrerId);
       })
       .catch((e: Error) => {
         console.log('LIFF init failed.', e);
